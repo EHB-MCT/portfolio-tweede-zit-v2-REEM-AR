@@ -10,7 +10,7 @@ const Comment = sequelize.define('Comment', {
   },
 });
 
-Question.hasMany(Comment);
+Question.hasMany(Comment, { onDelete: 'CASCADE' });
 Comment.belongsTo(Question);
 
 module.exports = Comment;

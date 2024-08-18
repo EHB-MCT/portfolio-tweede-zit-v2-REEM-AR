@@ -1,10 +1,13 @@
+// src/app.js
 const express = require('express');
-const userRoutes = require('./routes/userRoutes');
+const questionRoutes = require('./routes/questionRoutes');
+const commentRoutes = require('./routes/commentRoutes');
 
-const app = express();
+const app = express(); // Correctly declare the Express app
 
-app.use(express.json()); // Middleware to parse JSON bodies
+app.use(express.json());
 
-app.use('/api', userRoutes); // All routes prefixed with /api
+app.use('/api/questions', questionRoutes);
+app.use('/api/questions/:questionId/comments', commentRoutes);
 
-module.exports = app;
+module.exports = app; // Export the app correctly
