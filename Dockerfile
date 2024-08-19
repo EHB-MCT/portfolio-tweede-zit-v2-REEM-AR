@@ -1,23 +1,20 @@
 # Use an official Node.js runtime as a parent image
-FROM node:latest
+FROM node:14
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
-# Copy the package.json and package-lock.json
+# Copy the package.json and package-lock.json files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install 
+# Install the app dependencies
+RUN npm install
 
 # Copy the rest of the application code
 COPY . .
 
-# Expose the port the app runs on
+# Expose port 5000
 EXPOSE 5000
 
-# Define environment variable
-ENV NODE_ENV=production
-
-# Run the app
+# Start the application
 CMD ["node", "src/server.js"]
