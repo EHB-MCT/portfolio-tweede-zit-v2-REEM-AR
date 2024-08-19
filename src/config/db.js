@@ -2,11 +2,11 @@
 const { Sequelize } = require('sequelize');
 const dotenv = require('dotenv');
 
-dotenv.config(); // Load environment variables
+dotenv.config();
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: './database.sqlite', // The SQLite database file
 });
 
-module.exports = sequelize; // Export the sequelize instance
+module.exports = sequelize;

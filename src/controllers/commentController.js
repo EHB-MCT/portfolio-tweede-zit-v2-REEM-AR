@@ -1,28 +1,38 @@
 // src/controllers/commentController.js
 const Comment = require('../models/Comment');
 
-// Create a new comment for a specific question
+// Create a new comment
 const createComment = async (req, res) => {
-  try {
-    const { body } = req.body;
-    const comment = await Comment.create({ body, QuestionId: req.params.questionId });
-    res.status(201).json(comment);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to create comment' });
-  }
+    try {
+        const { body } = req.body;
+        const { questionId } = req.params;
+
+        const comment = await Comment.create({ body, QuestionId: questionId });
+        res.status(201).json(comment);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create comment' });
+    }
 };
 
-// Get all comments for a specific question
-const getCommentsByQuestionId = async (req, res) => {
-  try {
-    const comments = await Comment.findAll({ where: { QuestionId: req.params.questionId } });
-    res.status(200).json(comments);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to retrieve comments' });
-  }
+// Delete a comment by ID
+const deleteComment = async (req, res) => {
+    try {
+        const { commentId } = req.params;
+
+        const comment = await Comment.findByPk(commentId);
+
+        if (!comment) {
+            return res.status(404).json({ error: 'Comment not found' });
+        }
+
+        await comment.destroy();
+        res.json({ message: 'Comment deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete comment' });
+    }
 };
 
 module.exports = {
-  createComment,
-  getCommentsByQuestionId,
+    createComment,
+    deleteComment
 };
